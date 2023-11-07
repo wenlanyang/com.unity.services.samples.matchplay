@@ -707,11 +707,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 2
-  cloudProjectId: 
+  cloudProjectId: 8b30388c-7120-44f9-a0a1-b8309977cc5f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Terraform Provider UGS
+  organizationId: ericktest
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
