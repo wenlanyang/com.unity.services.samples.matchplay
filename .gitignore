@@ -106,3 +106,7 @@ crashlytics-build.properties
 
 *.DS_Store
 
+# Ignore test files
+TestResults-*.xml
+Assets/InitTestScene*.unity
+Assets/InitTestScene*.unity.meta
