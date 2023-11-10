@@ -110,3 +110,6 @@ crashlytics-build.properties
 TestResults-*.xml
 Assets/InitTestScene*.unity
 Assets/InitTestScene*.unity.meta
+
+# Ignore Docker environment file
+Docker-env-file*

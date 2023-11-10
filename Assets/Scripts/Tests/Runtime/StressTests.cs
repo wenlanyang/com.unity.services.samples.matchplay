@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 
 namespace Matchplay.Tests
 {
+    // [Ignore("Stress Tests are not run by default")]
     public class StressTests
     {
         NetworkManager m_TestManager;
@@ -33,15 +34,15 @@ namespace Matchplay.Tests
             }
         }
 
-        [UnityTest]
+        // Wait for 1 hour
+        [UnityTest, Timeout(3600000)]
         [RequiresPlayMode]
-        public IEnumerator Client_Play_Forever_On_Server()
+        public IEnumerator ClientPlayForever()
         {
             ClientGameManager gameManager = ClientSingleton.Instance.Manager;
             gameManager.SetGameMap(Map.Space);
             gameManager.SetGameMode(GameMode.Meditating);
             gameManager.SetGameQueue(GameQueue.Casual);
-            AwaitAuthenticationOrTimeout();
 
             string ip = Environment.GetEnvironmentVariable("SERVER_IP");
             if (ip == null)
@@ -52,19 +53,6 @@ namespace Matchplay.Tests
 
             gameManager.BeginConnection(ip, 9000);
             yield return new WaitUntil(() => false);
-        }
-
-        async void AwaitAuthenticationOrTimeout()
-        {
-            AuthState authState = await AuthenticationWrapper.Authenticating();
-            if (authState == AuthState.Authenticated)
-            {
-                Debug.Log("Client authenticated");
-            }
-            else
-            {
-                Debug.Log("Client failed to authenticate");
-            }
         }
     }
 }
