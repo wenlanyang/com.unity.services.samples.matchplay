@@ -1,0 +1,74 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ssd
+provisioner: pd.csi.storage.gke.io
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+parameters:
+  type: pd-ssd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stresstest
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: stresstest
+  template:
+    metadata:
+      labels:
+        app: stresstest
+    spec:
+      volumes:
+        - name: unity-volume
+          ephemeral:
+            volumeClaimTemplate:
+              metadata:
+                labels:
+                  type: unity-volume
+              spec:
+                accessModes: [ "ReadWriteOnce" ]
+                storageClassName: "ssd"
+                resources:
+                  requests:
+                    storage: 50Gi
+      containers:
+        - name: stresstest
+          image: us-central1-docker.pkg.dev/unity-solutions-devops-test/docker-repository/stresstest:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: "/unityproject"
+              name: unity-volume
+          resources:
+            limits:
+              cpu: "2"
+              ephemeral-storage: 10Gi
+              memory: 2Gi
+            requests:
+              cpu: "2"
+              ephemeral-storage: 10Gi
+              memory: 2Gi
+          env:
+            - name: SERVER_IP
+              value: 35.228.225.227
+            - name: SERIAL
+              valueFrom:
+                secretKeyRef:
+                  name: unity-license
+                  key: SERIAL
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: unity-license
+                  key: USERNAME
+            - name: PASSWORD
+              valueFrom:
+               secretKeyRef:
+                  name: unity-license
+                  key: PASSWORD
