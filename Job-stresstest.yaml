@@ -14,14 +14,17 @@ metadata:
   name: stresstest
   namespace: default
 spec:
-  completions: 10
-  parallelism: 10
+  completions: 1
+  parallelism: 1
+  activeDeadlineSeconds: 3600  # Set a timeout of 60 minutes
   template:
     metadata:
       labels:
         app: stresstest
     spec:
       restartPolicy: Never
+      nodeSelector:
+        cloud.google.com/compute-class: "Balanced"
       volumes:
         - name: unity-volume
           ephemeral:
@@ -46,11 +49,11 @@ spec:
             limits:
               cpu: "2"
               ephemeral-storage: 10Gi
-              memory: 2Gi
+              memory: 4Gi
             requests:
               cpu: "2"
               ephemeral-storage: 10Gi
-              memory: 2Gi
+              memory: 4Gi
           env:
             - name: SERVER_IP
               value: 35.228.225.227

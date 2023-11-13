@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 namespace Matchplay.Tests
 {
-    // [Ignore("Stress Tests are not run by default")]
+    [Explicit]
     public class StressTests
     {
         NetworkManager m_TestManager;
