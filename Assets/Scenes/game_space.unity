@@ -497,7 +497,7 @@ MonoBehaviour:
   <Position>k__BackingField:
     <OverridePosition>k__BackingField: 1
     m_PositionLeftToRight: 1
-    m_PositionTopToBottom: 0
+    m_PositionTopToBottom: 0.15
   <Configuration>k__BackingField: {fileID: 11400000, guid: 56ad3b417829d49b58f4c45f95daef22, type: 2}
 --- !u!4 &2000479852
 Transform:
