@@ -47,7 +47,7 @@ namespace Matchplay.Tests
             string ip = Environment.GetEnvironmentVariable("SERVER_IP");
             if (ip == null)
             {
-                Debug.Log("Environment variable SERVER_IP not set");
+                Debug.Log("Environment variable SERVER_IP not set:" + ip);
                 yield return null;
             }
 
